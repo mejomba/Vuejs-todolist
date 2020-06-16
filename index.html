@@ -10,7 +10,7 @@
 </head>
 <body>
 
-	<div class="container">
+	<div class="container my-5">
 		<div class='row'>
 			<div class="col">	
 				<div id="app">
@@ -19,11 +19,18 @@
 						<div class="list-group-item list-group-item-action active text-bold">لیست کارهای من</div>
 						
 
-						<div v-for="todo in todos" class="list-group-item">
-							<input v-if="todo.edit" type="text" :value="todo.title" class=""></input>
-							<span v-else :class="todo.complete ? 'task-done' : '' " @click="completeTask">{{todo.title}}</span>
-							<button class=" btn btn-danger fa fa-minus-circle float-left mr-2"></button> 
-							<button class="btn btn-info fa fa-edit float-left"></button>
+						<div v-for="todo, index in todos" class="list-group-item list-group-item-action" >
+							<input v-if="todo.edit" type="text" :value="todo.title" @keyup.enter="updateTodo(index, todo.title)" v-model="todo.title"></input>
+							<span v-else :class="todo.complete ? 'task-done' : '' ">{{todo.title}}</span>
+							
+							<button class=" btn btn-danger fa fa-minus-circle float-left mr-2" @click="deleteTask(index)"></button> 
+							<button class="btn btn-primary fa fa-edit float-left" @click="editTask(index)"></button>
+							
+							<button class="btn btn-success float-left ml-2 fa fa-check-circle"  @click="completeTask(index)" v-if=todo.complete><span class="mr-2">تغییر وضعیت </span></button>
+							<button class="btn btn-info float-left ml-2 fa fa-list-ul" @click="completeTask(index)" v-else><span class="mr-2">تغییر وضعیت</span></button>
+							
+							<span v-if="todo.complete" class="badge badge-pill badge-success">کامل شد</span>
+							<span v-else class="badge badge-pill badge-info">درحال انجام</span>
 						</div>
 
 

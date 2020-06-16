@@ -9,7 +9,7 @@ var app = new Vue({
 			},
 			{
 				title: 'آموزش Django',
-				edit: true,
+				edit: false,
 				complete: false,
 			},
 			{
@@ -32,8 +32,24 @@ var app = new Vue({
 			this.newTodo = ''
 		},
 
-		completeTask(){
-			this.todos.complete = !this.todos.complete
+		completeTask(index){
+			this.todos[index].complete = !this.todos[index].complete
+		},
+
+		deleteTask(index){
+			this.todos.splice(index, 1)
+		},
+
+		editTask(index){
+			for (var i = this.todos.length - 1; i >= 0; i--) {
+				this.todos[i].edit = false
+			}
+			this.todos[index].edit = !this.todos[index].edit
+		},
+
+		updateTodo(index, title){
+			this.todos[index].title = title
+			this.todos[index].edit = false
 		}
 	}
 })
